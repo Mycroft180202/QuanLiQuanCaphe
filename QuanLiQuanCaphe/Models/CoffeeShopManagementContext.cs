@@ -27,6 +27,8 @@ public partial class CoffeeShopManagementContext : DbContext
 
     public virtual DbSet<Report> Reports { get; set; }
 
+    public virtual DbSet<Role> Roles { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -48,12 +50,12 @@ public partial class CoffeeShopManagementContext : DbContext
             entity.HasOne(d => d.Product).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Cart_Products");
+                .HasConstraintName("FK_Cart_Products1");
 
             entity.HasOne(d => d.User).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Cart_Users");
+                .HasConstraintName("FK_Cart_Users1");
         });
 
         modelBuilder.Entity<Category>(entity =>
@@ -80,7 +82,7 @@ public partial class CoffeeShopManagementContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Orders_Users");
+                .HasConstraintName("FK_Orders_Users1");
         });
 
         modelBuilder.Entity<OrderDetail>(entity =>
@@ -95,12 +97,12 @@ public partial class CoffeeShopManagementContext : DbContext
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_OrderDetails_Orders");
+                .HasConstraintName("FK_OrderDetails_Orders1");
 
             entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_OrderDetails_Products");
+                .HasConstraintName("FK_OrderDetails_Products1");
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -128,6 +130,13 @@ public partial class CoffeeShopManagementContext : DbContext
             entity.Property(e => e.ReportName).HasMaxLength(100);
         });
 
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.ToTable("Role");
+
+            entity.Property(e => e.RoleName).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCAC5C6D139F");
@@ -135,9 +144,14 @@ public partial class CoffeeShopManagementContext : DbContext
             entity.HasIndex(e => e.Username, "UQ__Users__536C85E44D91051D").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
-            entity.Property(e => e.PasswordHash).HasMaxLength(255);
-            entity.Property(e => e.Role).HasMaxLength(20);
+            entity.Property(e => e.Email).HasMaxLength(50);
+            entity.Property(e => e.FullName).HasMaxLength(50);
+            entity.Property(e => e.Password).HasMaxLength(255);
             entity.Property(e => e.Username).HasMaxLength(50);
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Users)
+                .HasForeignKey(d => d.RoleId)
+                .HasConstraintName("FK_Users_Role");
         });
 
         OnModelCreatingPartial(modelBuilder);
