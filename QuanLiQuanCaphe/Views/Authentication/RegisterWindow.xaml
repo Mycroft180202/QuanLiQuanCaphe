@@ -1,0 +1,59 @@
+﻿<Window x:Class="Product_Management_System.Views.Authentication.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Product_Management_System.Views.Authentication"
+        mc:Ignorable="d"
+        Title="RegisterWindow" Height="550" Width="800">
+    <Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="82" VerticalAlignment="Top">
+            <TextBlock Text="REGISTER WINDOW" Foreground="Red" FontSize="28" FontWeight="Medium"/>
+        </StackPanel>
+
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Full Name" Foreground="DarkGray" FontSize="12" FontWeight="Medium" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBox x:Name="txtFullName" FontSize="13" FontWeight="Medium" BorderBrush="DarkGray"
+                     BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,0,5" Grid.Row="0" Grid.Column="1"/>
+
+            <Label Content="Email" Foreground="DarkGray" FontSize="12" FontWeight="Medium" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBox x:Name="txtEmail" FontSize="13" FontWeight="Medium" BorderBrush="DarkGray"
+                     BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,0,5" Grid.Row="1" Grid.Column="1"/>
+
+            <Label Content="Username" Foreground="DarkGray" FontSize="12" FontWeight="Medium" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBox x:Name="txtUser" FontSize="13" FontWeight="Medium" BorderBrush="DarkGray"
+                     BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,0,5" Grid.Row="2" Grid.Column="1"/>
+
+            <Label Content="Password" Foreground="DarkGray" FontSize="12" FontWeight="Medium" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
+            <PasswordBox x:Name="txtPass" FontSize="13" FontWeight="Medium" BorderBrush="DarkGray"
+                         BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,0,5" Grid.Row="3" Grid.Column="1"/>
+
+            <Label Content="Confirm Password" Foreground="DarkGray" FontSize="12" FontWeight="Medium" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
+            <PasswordBox x:Name="txtConfirmPass" FontSize="13" FontWeight="Medium" BorderBrush="DarkGray"
+                         BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,0,5" Grid.Row="4" Grid.Column="1"/>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,20,0,20">
+            <Button x:Name="btnRegister" BorderThickness="0" Content="REGISTER" Foreground="White" FontSize="12"
+                    Margin="10,0" Background="#0080FF" Width="150" Height="40" Click="btnRegister_Click" />
+
+            <Button x:Name="btnCancel" BorderThickness="0" Content="CANCEL" Foreground="White" FontSize="12"
+                    Margin="10,0" Background="LightSeaGreen" Width="150" Height="40" Click="btnCancel_Click" />
+
+            <Button x:Name="btnBackToLogin" BorderThickness="0" Content="BACK" Foreground="White" FontSize="12"
+                    Margin="10,0" Background="LightSeaGreen" Width="150" Height="40" Click="btnBack_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

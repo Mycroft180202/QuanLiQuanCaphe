@@ -1,20 +1,21 @@
-﻿using System.Linq;
+﻿using QuanLiQuanCaphe.Repositories;
 using QuanLiQuanCaphe.Models;
 
-namespace QuanLiQuanCaphe.Services.Authentication
+namespace QuanLiQuanCaphe.Services
 {
-    public class AuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
-        private readonly CoffeeShopManagementContext _context;
+        private readonly IUserRepository _userRepository;
 
-        public AuthenticationService(CoffeeShopManagementContext context)
+        public AuthenticationService(IUserRepository userRepository)
         {
-            _context = context;
+            _userRepository = userRepository;
         }
 
-        public User Authenticate(string username, string passwordHash)
+        public User? Authenticate(string username, string password)
         {
-            return _context.Users.SingleOrDefault(user => user.Username == username && user.PasswordHash == passwordHash);
+            var user = _userRepository.GetUserByUsernameAndPassword(username, password);
+            return user;
         }
     }
 }

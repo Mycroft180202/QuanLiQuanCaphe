@@ -1,14 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using QuanLiQuanCaphe.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using QuanLiQuanCaphe.Models;
+using QuanLiQuanCaphe.Repositories;
 
-namespace QuanLiQuanCaphe.Repositories.Authentication
+namespace Product_Management_System.Repositories.Authentication
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly CoffeeShopManagementContext _context;
 
@@ -17,20 +15,17 @@ namespace QuanLiQuanCaphe.Repositories.Authentication
             _context = context;
         }
 
-        public User GetUserByUsernameAndPassword(string username, string passwordHash)
+        public List<User> GetAllUsers()
         {
-            return _context.Users.SingleOrDefault(user => user.Username == username && user.PasswordHash == passwordHash);
+            return _context.Users.Include(u => u.Role).ToList();
         }
-        public void AddUser(User newUser)
-        {
-            _context.Users.Add(newUser);
-            _context.SaveChanges();
-        }
+
         public void UpdateUser(User user)
         {
             _context.Users.Update(user);
             _context.SaveChanges();
         }
+
         public void DeleteUser(int userId)
         {
             var user = _context.Users.Find(userId);
@@ -40,9 +35,24 @@ namespace QuanLiQuanCaphe.Repositories.Authentication
                 _context.SaveChanges();
             }
         }
-        public List<User> GetAllUsers()
+
+        public User GetUserByUsername(string username)
         {
-            return _context.Users.Include(u => u.Role).ToList();
+            return _context.Users.FirstOrDefault(u => u.Username == username);
         }
+
+        public void AddUser(User newUser)
+        {
+            _context.Users.Add(newUser);
+            _context.SaveChanges();
+        }
+
+        public User GetUserByUsernameAndPassword(string username, string password)
+        {
+            return _context.Users
+                .FirstOrDefault(u => u.Username == username && u.Password == password && u.IsActive);
+        }
+
+
     }
 }
