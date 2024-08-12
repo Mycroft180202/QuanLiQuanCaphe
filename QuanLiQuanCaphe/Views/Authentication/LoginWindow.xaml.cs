@@ -1,29 +1,31 @@
-﻿using System.Windows;
-using QuanLiQuanCaphe.Models;
-using QuanLiQuanCaphe.Repositories;
-using Microsoft.Extensions.DependencyInjection;
-using QuanLiQuanCaphe.Services;
-using static Product_Management_System.App;
+﻿using Product_Management_System;
 using Product_Management_System.Repositories.Authentication;
-using QuanLiQuanCaphe;
+using QuanLiQuanCaphe.Models;
+using QuanLiQuanCaphe.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using static Product_Management_System.App;
 
-namespace Product_Management_System.Views.Authentication
+namespace QuanLiQuanCaphe.Views.Authentication
 {
+    /// <summary>
+    /// Interaction logic for LoginWindow.xaml
+    /// </summary>
     public partial class LoginWindow : Window
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly CurrentUserService _currentUserService;
-
-        public LoginWindow(IAuthenticationService authService, CurrentUserService currentUserService)
-        {
-            InitializeComponent();
-            var context = new CoffeeShopManagementContext(); 
-            var userRepository = new UserRepository(context);
-            _authenticationService = new AuthenticationService(userRepository);
-            _authenticationService = authService;
-            _currentUserService = currentUserService; 
-        }
-
         public LoginWindow()
         {
             InitializeComponent();
@@ -32,7 +34,15 @@ namespace Product_Management_System.Views.Authentication
             _authenticationService = new AuthenticationService(userRepository);
             _currentUserService = new CurrentUserService();
         }
-
+        public LoginWindow(IAuthenticationService authService, CurrentUserService currentUserService)
+        {
+            InitializeComponent();
+            var context = new CoffeeShopManagementContext();
+            var userRepository = new UserRepository(context);
+            _authenticationService = new AuthenticationService(userRepository);
+            _authenticationService = authService;
+            _currentUserService = currentUserService;
+        }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUser.Text;

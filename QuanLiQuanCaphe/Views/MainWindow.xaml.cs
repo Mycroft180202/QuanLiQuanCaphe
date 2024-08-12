@@ -1,9 +1,9 @@
 using Product_Management_System.Repositories;
 using Product_Management_System.Repositories.Authentication;
 using Product_Management_System.Views.Admin;
-using Product_Management_System.Views.Authentication;
 using QuanLiQuanCaphe.Models;
 using QuanLiQuanCaphe.Repositories;
+using QuanLiQuanCaphe.Views.Authentication;
 using System.Windows;
 using System.Windows.Input;
 

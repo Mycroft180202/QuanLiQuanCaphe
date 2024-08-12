@@ -53,6 +53,9 @@ namespace Product_Management_System.Repositories.Authentication
                 .FirstOrDefault(u => u.Username == username && u.Password == password && u.IsActive);
         }
 
-
+        public User GetUserByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault(u => u.Email == email);
+        }
     }
 }
