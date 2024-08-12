@@ -3,9 +3,9 @@ using QuanLiQuanCaphe.Models;
 using QuanLiQuanCaphe.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using QuanLiQuanCaphe.Services;
-using static Product_Management_System.App;
 using Product_Management_System.Repositories.Authentication;
 using QuanLiQuanCaphe;
+using static Product_Management_System.App;
 
 namespace Product_Management_System.Views.Authentication
 {

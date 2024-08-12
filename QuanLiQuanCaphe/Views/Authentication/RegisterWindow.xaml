@@ -1,9 +1,9 @@
-﻿<Window x:Class="Product_Management_System.Views.Authentication.RegisterWindow"
+﻿<Window x:Class="QuanLiQuanCaphe.Views.Authentication.RegisterWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Product_Management_System.Views.Authentication"
+        xmlns:local="clr-namespace:QuanLiQuanCaphe.Views.Authentication"
         mc:Ignorable="d"
         Title="RegisterWindow" Height="550" Width="800">
     <Grid>
