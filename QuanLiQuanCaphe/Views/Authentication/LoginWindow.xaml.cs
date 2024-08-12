@@ -6,6 +6,7 @@ using QuanLiQuanCaphe.Services;
 using Product_Management_System.Repositories.Authentication;
 using QuanLiQuanCaphe;
 using static Product_Management_System.App;
+using QuanLiQuanCaphe.Views.Authentication;
 
 namespace Product_Management_System.Views.Authentication
 {
