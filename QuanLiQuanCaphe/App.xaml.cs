@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using Product_Management_System.Repositories;
-using Product_Management_System.Views.Authentication;
 using Product_Management_System.Repositories.Authentication;
 using QuanLiQuanCaphe.Repositories;
 using QuanLiQuanCaphe.Services;
 using QuanLiQuanCaphe;
 using QuanLiQuanCaphe.Models;
 using Product_Management_System.Views.Admin;
+using QuanLiQuanCaphe.Views.Authentication;
 
 namespace Product_Management_System
 {
