@@ -41,7 +41,7 @@ namespace Product_Management_System
             services.AddSingleton<CurrentUserService>();
         }
 
-        public class CurrentUserService
+        public class CurrentUserService                                                                                         
         {
             private User _currentUser;
 
