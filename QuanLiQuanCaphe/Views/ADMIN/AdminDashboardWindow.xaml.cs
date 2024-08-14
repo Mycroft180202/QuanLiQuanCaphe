@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using Product_Management_System.Repositories;
+﻿using System.Windows;
 using Product_Management_System.Repositories.Authentication;
-using QuanLiQuanCaphe.Models;
+using QuanLiQuanCaphe.Views.ADMIN;
 
 namespace Product_Management_System.Views.Admin
 {
@@ -13,46 +11,16 @@ namespace Product_Management_System.Views.Admin
         public AdminDashboardWindow()
         {
             InitializeComponent();
-            _userRepository = new UserRepository(new CoffeeShopManagementContext());
-            LoadUsers();
         }
 
-        private void LoadUsers()
+        private void AccManage_Click(object sender, RoutedEventArgs e)
         {
-            List<User> users = _userRepository.GetAllUsers();
-            lvUsers.ItemsSource = users;
+            MainFrame.Content = new ActivateAccount();
         }
 
-        private void btnActivate_Click(object sender, RoutedEventArgs e)
+        private void Report_Click(object sender, RoutedEventArgs e)
         {
-            User selectedUser = (User)lvUsers.SelectedItem;
-            if (selectedUser != null)
-            {
-                selectedUser.IsActive = true;
-                _userRepository.UpdateUser(selectedUser);
-                LoadUsers();
-            }
-        }
-
-        private void btnDeactivate_Click(object sender, RoutedEventArgs e)
-        {
-            User selectedUser = (User)lvUsers.SelectedItem;
-            if (selectedUser != null)
-            {
-                selectedUser.IsActive = false;
-                _userRepository.UpdateUser(selectedUser);
-                LoadUsers();
-            }
-        }
-
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
-        {
-            User selectedUser = (User)lvUsers.SelectedItem;
-            if (selectedUser != null)
-            {
-                _userRepository.DeleteUser(selectedUser.UserId);
-                LoadUsers();
-            }
+            MainFrame.Content = new Report();
         }
     }
 }
