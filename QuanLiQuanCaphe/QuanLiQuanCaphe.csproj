@@ -16,6 +16,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Views\Shopping Cart\.jpg" />
+    <None Remove="Views\Shopping Cart\bf5d05409b5b509bb3e7a988bf89649b.jpg" />
+    <None Remove="Views\Shopping Cart\ca-phe-den-da.webp" />
+    <None Remove="Views\Shopping Cart\full %281%29.png" />
+    <None Remove="Views\Shopping Cart\full.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
@@ -28,12 +36,20 @@
 
   <ItemGroup>
     <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Shopping Cart\bf5d05409b5b509bb3e7a988bf89649b.jpg" />
+    <Resource Include="Views\Shopping Cart\ca-phe-den-da.webp" />
+    <Resource Include="Views\Shopping Cart\full (1).png" />
+    <Resource Include="Views\Shopping Cart\full.png" />
+    <Resource Include="Views\Shopping Cart\.jpg" />
   </ItemGroup>
 
 </Project>

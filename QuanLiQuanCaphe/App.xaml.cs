@@ -51,8 +51,8 @@ namespace Product_Management_System
 
         private void OnStartup(object sender, StartupEventArgs e)
         {
-            var loginWindow = serviceProvider.GetService<LoginWindow>();
-            loginWindow.Show();
+            var MainWindow = new MainWindow();
+            MainWindow.Show();
         }
     }
 }
