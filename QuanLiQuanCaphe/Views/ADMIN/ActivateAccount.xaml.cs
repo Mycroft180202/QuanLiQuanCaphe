@@ -65,5 +65,10 @@ namespace QuanLiQuanCaphe.Views.ADMIN
                 LoadUsers();
             }
         }
+
+        private void Page_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
+        {
+
+        }
     }
 }

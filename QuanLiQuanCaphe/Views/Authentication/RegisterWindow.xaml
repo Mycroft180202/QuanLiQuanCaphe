@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLiQuanCaphe.Views.Authentication"
         mc:Ignorable="d"
-        Title="RegisterWindow" Height="550" Width="800">
+        Title="RegisterWindow" Height="550" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="82" VerticalAlignment="Top">
             <TextBlock Text="REGISTER WINDOW" Foreground="Red" FontSize="28" FontWeight="Medium"/>

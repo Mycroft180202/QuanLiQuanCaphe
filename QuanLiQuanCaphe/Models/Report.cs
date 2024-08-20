@@ -12,4 +12,8 @@ public partial class Report
     public DateTime ReportDate { get; set; }
 
     public string FilePath { get; set; } = null!;
+
+    public int OrderId { get; set; }
+
+    public virtual Order Order { get; set; } = null!;
 }

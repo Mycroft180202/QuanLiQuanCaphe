@@ -29,6 +29,8 @@ public partial class CoffeeShopManagementContext : DbContext
 
     public virtual DbSet<Role> Roles { get; set; }
 
+    public virtual DbSet<Table> Tables { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -76,8 +78,13 @@ public partial class CoffeeShopManagementContext : DbContext
             entity.Property(e => e.OrderDate).HasColumnType("datetime");
             entity.Property(e => e.PaymentMethod).HasMaxLength(50);
             entity.Property(e => e.Status).HasMaxLength(20);
+            entity.Property(e => e.TableId).HasColumnName("TableID");
             entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.Table).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.TableId)
+                .HasConstraintName("FK_Orders_Table");
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
@@ -126,8 +133,14 @@ public partial class CoffeeShopManagementContext : DbContext
 
             entity.Property(e => e.ReportId).HasColumnName("ReportID");
             entity.Property(e => e.FilePath).HasMaxLength(255);
+            entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.ReportDate).HasColumnType("datetime");
             entity.Property(e => e.ReportName).HasMaxLength(100);
+
+            entity.HasOne(d => d.Order).WithMany(p => p.Reports)
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Reports_Orders");
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -135,6 +148,16 @@ public partial class CoffeeShopManagementContext : DbContext
             entity.ToTable("Role");
 
             entity.Property(e => e.RoleName).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<Table>(entity =>
+        {
+            entity.ToTable("Table");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<User>(entity =>

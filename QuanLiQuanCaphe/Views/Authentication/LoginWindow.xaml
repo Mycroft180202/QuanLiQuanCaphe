@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLiQuanCaphe.Views.Authentication"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
-    <Grid>
+        Title="LoginWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid Margin="-10,-10,0,0">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="82" VerticalAlignment="Top">
             <TextBlock Text="LOGIN " Foreground="Red" FontSize="28" FontWeight="Medium"/>
         </StackPanel>
@@ -20,12 +20,12 @@
                          BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,0,0" />
 
             <Button x:Name="btnLogin" BorderThickness="0" Content="LOG IN" Foreground="White" FontSize="12"
-                    Margin="0,20,0,0" Background="#0080FF" Width="150" Height="40" Click="btnLogin_Click" />
+                    Margin="0,20,0,0" Background="#0080FF" Width="109" Height="24" Click="btnLogin_Click" />
             <Button x:Name="btnRegister" BorderThickness="0" Content="REGISTER" Foreground="White" FontSize="12"
-                     Margin="0,20,0,0" Background="CadetBlue" Width="150" Height="40" Click="btnRegister_Click" />
+                     Margin="0,20,0,0" Background="CadetBlue" Width="105" Height="24" Click="btnRegister_Click" />
 
             <Button x:Name="btnCancel" BorderThickness="0" Content="CANCEL" Foreground="White" FontSize="12"
-                    Margin="0,20,0,0" Background="LightSeaGreen" Width="150" Height="40" Click="btnCancel_Click" />
+                    Margin="0,20,0,0" Background="LightSeaGreen" Width="102" Height="20" Click="btnCancel_Click" />
 
 
         </StackPanel>

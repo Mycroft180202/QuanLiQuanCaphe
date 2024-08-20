@@ -17,7 +17,13 @@ public partial class Order
 
     public string? PaymentMethod { get; set; }
 
+    public int? TableId { get; set; }
+
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+
+    public virtual ICollection<Report> Reports { get; set; } = new List<Report>();
+
+    public virtual Table? Table { get; set; }
 
     public virtual User User { get; set; } = null!;
 }
