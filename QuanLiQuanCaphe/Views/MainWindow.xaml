@@ -1,34 +1,24 @@
 ﻿<Window x:Class="Product_Management_System.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Product Management System" Height="600" Width="1018" WindowStartupLocation="CenterScreen">
+        Title="Product Management System" Height="700" Width="1018" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Header Row -->
             <RowDefinition Height="*"/>
-            <!-- Main Content Row -->
             <RowDefinition Height="Auto"/>
-            <!-- Footer Row -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
-            <!-- Left Panel for order details -->
             <ColumnDefinition Width="Auto"/>
-            <!-- Divider -->
             <ColumnDefinition Width="7*"/>
-            <!-- Right Panel for table list -->
         </Grid.ColumnDefinitions>
 
         <!-- Header with navigation bar -->
         <DockPanel LastChildFill="True" Grid.Row="0" Grid.ColumnSpan="3">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Button Name="btnMenu" Content="Menu" VerticalAlignment="Top" Height="40" Width="150" 
-                        Click="btnMenu_Click" Margin="10"/>
-                <Button Name="btnCart" Content="Cart" VerticalAlignment="Top" Height="40" Width="150" 
-                        Click="btnCart_Click" Margin="10"/>
-                <Button Name="btnOrderButton" Content="Order" VerticalAlignment="Top" Height="40" Width="150" 
-                        Click="btnOrder_Click" Margin="10"/>
+                <Button x:Name="btnManage" Content="Manage" VerticalAlignment="Center" Height="40" Width="150" 
+                        HorizontalAlignment="Center" Click="btnManage_Click" Visibility="Collapsed"  Margin="5"/>
                 <Button x:Name="btnDashboard" Content="Dashboard" VerticalAlignment="Center" Height="40" Width="150" 
                         HorizontalAlignment="Center" Click="btnDashboard_Click" Visibility="Collapsed" Margin="5"/>
             </StackPanel>
@@ -50,15 +40,26 @@
                 <TextBlock x:Name="txtUserName" Text=""/>
                 <TextBlock Text="Ngày đặt:" FontWeight="Bold" Margin="10,0,0,0"/>
                 <TextBlock x:Name="txtOrderDate" Text=""/>
-                <TextBlock Text="Tổng tiền:" FontWeight="Bold" Margin="10,0,0,0"/>
+
+                <!-- New Section for Displaying Selected Table -->
+                <TextBlock Text="Bàn đã chọn:" FontWeight="Bold" Margin="10,10,0,0"/>
+                <TextBlock x:Name="txtSelectedTable" Text="Chưa chọn bàn" Foreground="Blue" FontWeight="Bold"/>
+
+                <TextBlock Text="Chọn sản phẩm:" FontWeight="Bold" Margin="10,10,0,0"/>
+                <ListBox x:Name="lstProducts" SelectionMode="Multiple" Height="100" Margin="0,5" 
+                         SelectionChanged="lstProducts_SelectionChanged">
+                    <!-- Example items, replace with dynamic items -->
+                    <!-- ListBoxItems will be dynamically populated in the code-behind -->
+                </ListBox>
+
+                <TextBlock Text="Tổng tiền:" FontWeight="Bold" Margin="10,10,0,0"/>
                 <TextBlock x:Name="txtTotalAmount" Text=""/>
                 <TextBlock Text="Phương thức thanh toán:" FontWeight="Bold" Margin="10,0,0,0"/>
                 <ComboBox x:Name="cmbPaymentMethod" Width="150" Margin="0,5">
                     <ComboBoxItem Content="QR"/>
                     <ComboBoxItem Content="Tiền mặt"/>
                 </ComboBox>
-                <TextBlock Text="Đồ uống đã chọn:" FontWeight="Bold" Margin="10,0,0,0"/>
-                <ListBox x:Name="lstOrderDetails" Height="100"/>
+                
                 <Button x:Name="btnOrder" Content="Order" Width="100" Height="40" Margin="10,10,0,0" Click="btnOrder_Click"/>
             </StackPanel>
         </Border>

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Product_Management_System.Repositories.Authentication;
 using QuanLiQuanCaphe.Views.ADMIN;
+using QuanLiQuanCaphe.Views.Cart;
 
 namespace Product_Management_System.Views.Admin
 {
@@ -20,7 +21,14 @@ namespace Product_Management_System.Views.Admin
 
         private void Report_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new Report();
+            var reportWindow = new ReportWindow();
+            reportWindow.ShowDialog();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ProductManagerWindow productManagerWindow = new ProductManagerWindow();
+            productManagerWindow.Show();
         }
     }
 }

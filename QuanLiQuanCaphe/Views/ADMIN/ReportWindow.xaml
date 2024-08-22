@@ -1,0 +1,21 @@
+﻿<Window x:Class="Product_Management_System.Views.Admin.ReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Sales Report" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <StackPanel>
+            <TextBlock Text="Sales Report" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
+            <DataGrid x:Name="dgReport" AutoGenerateColumns="False" Height="400">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" Width="*"/>
+                    <DataGridTextColumn Header="Quantity Sold" Binding="{Binding QuantitySold}" Width="*"/>
+                    <DataGridTextColumn Header="Total Sales" Binding="{Binding TotalSales}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                <Button Content="Export to CSV" Width="120" Height="30" Margin="5" Click="ExportToCSV_Click"/>
+                <Button Content="Close" Width="100" Height="30" Margin="5" Click="Close_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

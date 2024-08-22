@@ -1,16 +1,18 @@
-﻿using Product_Management_System.Repositories;
-using Product_Management_System.Repositories.Authentication;
-using Product_Management_System.Views.Admin;
-using QuanLiQuanCaphe.Models;
-using QuanLiQuanCaphe.Repositories;
-using QuanLiQuanCaphe.Views.Authentication;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Product_Management_System.Repositories;
+using Product_Management_System.Repositories.Authentication;
+using Product_Management_System.Views;
+using Product_Management_System.Views.Admin;
+using QuanLiQuanCaphe.Models;
+using QuanLiQuanCaphe.Repositories;
+using QuanLiQuanCaphe.Views.Authentication;
+using QuanLiQuanCaphe.Views.Cart;
 
 namespace Product_Management_System
 {
@@ -31,6 +33,7 @@ namespace Product_Management_System
             SetupUIBasedOnUserRole();
             LoadUserInfo();
             LoadTablesAsync(); // Load tables asynchronously
+            LoadProductsAsync(); // Load products asynchronously
         }
 
         private void SetupUIBasedOnUserRole()
@@ -38,6 +41,11 @@ namespace Product_Management_System
             if (currentUser != null && currentUser.RoleId == 1) // Admin
             {
                 btnDashboard.Visibility = Visibility.Visible;
+                btnManage.Visibility = Visibility.Visible;
+            }
+            if (currentUser != null && currentUser.RoleId == 2) // Staff
+            {
+                btnManage.Visibility = Visibility.Visible;
             }
         }
 
@@ -94,68 +102,143 @@ namespace Product_Management_System
             }
         }
 
+        private async Task LoadProductsAsync()
+        {
+            List<Product> products;
+            using (var context = new CoffeeShopManagementContext())
+            {
+                products = context.Products.ToList();
+            }
+
+            lstProducts.Items.Clear();
+            foreach (var product in products)
+            {
+                var item = new ListBoxItem
+                {
+                    Content = $"{product.Name} - {product.Price:C}",
+                    Tag = product // Store the product object for later use
+                };
+                lstProducts.Items.Add(item);
+            }
+        }
+
+        private void lstProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Recalculate the total amount
+            CalculateTotalAmount();
+        }
+
+        private void CalculateTotalAmount()
+        {
+            totalAmount = 0; // Reset the total amount
+
+            foreach (ListBoxItem selectedItem in lstProducts.SelectedItems)
+            {
+                var product = (Product)selectedItem.Tag;
+                totalAmount += product.Price; // Add the price of each selected product
+            }
+
+            // Update the total amount in the UI
+            txtTotalAmount.Text = totalAmount.ToString("C");
+        }
+
+
         private void TableButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             if (button != null)
             {
-                // Lấy tên bàn từ nội dung nút
                 var tableName = button.Content.ToString();
-
-                // Tìm bàn trong cơ sở dữ liệu dựa trên tên
                 selectedTable = dbContext.Tables.FirstOrDefault(t => t.Name == tableName);
 
                 if (selectedTable != null)
                 {
-                    // Hiển thị thông tin người dùng hiện tại
-                    txtUserName.Text = currentUser.FullName;
-
-                    // Lấy thời gian hiện tại
-                    txtOrderDate.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-
-                    // Xóa các món cũ và đặt tổng tiền về 0
-                    lstOrderDetails.Items.Clear();
-                    totalAmount = 0;
-                    txtTotalAmount.Text = totalAmount.ToString("C");
-
-                    // Đặt phương thức thanh toán mặc định
-                    cmbPaymentMethod.SelectedIndex = 0;
+                    if (selectedTable.IsOccupied == true)
+                    {
+                        MessageBox.Show($"Bàn {selectedTable.Name} đã có người đặt rồi. Vui lòng chọn bàn khác.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        txtSelectedTable.Text = $"Bàn {selectedTable.Name}";
+                        txtUserName.Text = currentUser.FullName;
+                        txtOrderDate.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                        totalAmount = 0;
+                        txtTotalAmount.Text = totalAmount.ToString("C");
+                        cmbPaymentMethod.SelectedIndex = 0;
+                        MessageBox.Show($"Bạn đã chọn bàn {selectedTable.Name}.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 }
             }
         }
 
-        // Sự kiện thêm đồ uống (giả sử có sẵn danh sách đồ uống để chọn)
-        private void AddDrinkToOrder(string drinkName, decimal price, int quantity)
+        private void AddDrinkToOrder(Product product, int quantity)
         {
-            totalAmount += price * quantity;
+            totalAmount += product.Price * quantity;
             txtTotalAmount.Text = totalAmount.ToString("C");
-            lstOrderDetails.Items.Add($"{drinkName} - {quantity} x {price:C}");
         }
 
-        // Sự kiện khi bấm nút Order
         private void btnOrder_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedTable != null)
-            {
-                var order = new Order
-                {
-                    UserId = currentUser.UserId,
-                    OrderDate = DateTime.Now,
-                    Status = "Active",
-                    TotalAmount = totalAmount,
-                    PaymentMethod = cmbPaymentMethod.Text,
-                    TableId = selectedTable.Id
-                };
-
-                dbContext.Orders.Add(order);
-                dbContext.SaveChanges();
-
-                MessageBox.Show("Đơn hàng đã được đặt thành công!");
-                ClearOrderDetails(); // Sau khi đặt hàng xong thì xóa các thông tin
-            }
-            else
+            if (selectedTable == null)
             {
                 MessageBox.Show("Vui lòng chọn bàn trước khi đặt hàng!");
+                return;
+            }
+
+            if (lstProducts.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn ít nhất một sản phẩm!");
+                return;
+            }
+
+            var order = new Order
+            {
+                UserId = currentUser.UserId,
+                OrderDate = DateTime.Now,
+                Status = "Pending",
+                TotalAmount = totalAmount,
+                PaymentMethod = cmbPaymentMethod.Text,
+                TableId = selectedTable.Id
+            };
+
+            dbContext.Orders.Add(order);
+            dbContext.SaveChanges(); // Save to generate OrderId
+
+            foreach (ListBoxItem selectedItem in lstProducts.SelectedItems)
+            {
+                var product = (Product)selectedItem.Tag;
+
+                var orderDetail = new OrderDetail
+                {
+                    OrderId = order.OrderId,
+                    ProductId = product.ProductId,
+                    Price = product.Price,
+                    Quantity = 1 // Default quantity for now; you can adjust this as needed
+                };
+
+                dbContext.OrderDetails.Add(orderDetail);
+            }
+
+            dbContext.SaveChanges();
+
+            selectedTable.IsOccupied = true;
+            dbContext.Tables.Update(selectedTable);
+            dbContext.SaveChanges();
+
+            UpdateTableButtonColor(selectedTable.Name, Brushes.Red);
+            MessageBox.Show("Đơn hàng đã được đặt thành công!");
+            ClearOrderDetails();
+        }
+
+        private void UpdateTableButtonColor(string tableName, Brush color)
+        {
+            foreach (Button button in tablesPanel.Children.OfType<Button>())
+            {
+                if (button.Content.ToString() == tableName)
+                {
+                    button.Background = color;
+                    break;
+                }
             }
         }
 
@@ -164,17 +247,43 @@ namespace Product_Management_System
             txtUserName.Text = string.Empty;
             txtOrderDate.Text = string.Empty;
             txtTotalAmount.Text = string.Empty;
-            lstOrderDetails.Items.Clear();
+            lstProducts.SelectedItems.Clear();
         }
 
-        private void btnMenu_Click(object sender, RoutedEventArgs e)
+        private void btnManage_Click(object sender, RoutedEventArgs e)
         {
-            // Handle menu button click
+            // Ensure that only Admin and Staff can access the Manage functionality
+            if (currentUser != null && (currentUser.RoleId == 1 || currentUser.RoleId == 2)) // Admin or Staff
+            {
+                var manageOrdersWindow = new ManageOrdersWindow();
+                manageOrdersWindow.RefreshTables = RefreshTableColors;
+                manageOrdersWindow.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Bạn không có quyền truy cập chức năng này!");
+            }
+        }
+        private void RefreshTableColors()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                using (var context = new CoffeeShopManagementContext())
+                {
+                    foreach (Button button in tablesPanel.Children.OfType<Button>())
+                    {
+                        var tableName = button.Content.ToString();
+                        var table = context.Tables.FirstOrDefault(t => t.Name == tableName);
+
+                        if (table != null)
+                        {
+                            // Update the button color based on the table's occupancy status
+                            button.Background = table.IsOccupied == true ? Brushes.Red : Brushes.Green;
+                        }
+                    }
+                }
+            });
         }
 
-        private void btnCart_Click(object sender, RoutedEventArgs e)
-        {
-            // Handle cart button click
-        }
     }
 }

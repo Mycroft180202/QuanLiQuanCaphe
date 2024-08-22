@@ -4,7 +4,8 @@
         Title="Admin Dashboard" Height="800" Width="800" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,0,-6">
         <Button Content="Account Management" HorizontalAlignment="Left" Margin="24,31,0,0" VerticalAlignment="Top" Height="31" Width="130" Click="AccManage_Click"/>
-        <Frame x:Name="MainFrame" Margin="57,81,-57,-11"/>
-        <Button Content="Report" HorizontalAlignment="Left" Margin="255,31,0,0" VerticalAlignment="Top" Width="161" Height="31" Click="Report_Click"/>
+        <Frame x:Name="MainFrame" Margin="0,70,0,0"/>
+        <Button Content="Report" HorizontalAlignment="Left" Margin="400,31,0,0" VerticalAlignment="Top" Width="166" Height="31" Click="Report_Click"/>
+        <Button Content="Manage Products" HorizontalAlignment="Left" Margin="190,31,0,0" VerticalAlignment="Top" Height="31" Width="158" Click="Button_Click"/>
     </Grid>
 </Window>

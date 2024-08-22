@@ -37,15 +37,12 @@ public partial class CoffeeShopManagementContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        Console.WriteLine(Directory.GetCurrentDirectory());
-        IConfiguration config = new ConfigurationBuilder()
-        .SetBasePath(Directory.GetCurrentDirectory())
-        .AddJsonFile("appsettings.json", true, true)
-        .Build();
-        var strConn = config["ConnectionStrings:DB"];
-        optionsBuilder.UseSqlServer(strConn);
+        var builder = new ConfigurationBuilder()
+                           .SetBasePath(Directory.GetCurrentDirectory())
+                           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+        IConfigurationRoot configuration = builder.Build();
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString("DB"));
     }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -129,11 +126,9 @@ public partial class CoffeeShopManagementContext : DbContext
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.Image).HasMaxLength(100);
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.Image).HasMaxLength(255);
-
-
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
