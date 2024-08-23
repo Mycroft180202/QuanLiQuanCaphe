@@ -1,0 +1,16 @@
+﻿<Window x:Class="QuanLiQuanCaphe.Views.OrderPage.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLiQuanCaphe.Views.OrderPage"
+        mc:Ignorable="d"
+        Title="OrderWindow" Height="202" Width="382">
+    <Grid Background="#FFFCE6E6">
+        <Grid>
+            <Button x:Name="btnOrderDetails" Content="Order Details" Click="btnOrderDetails_Click" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button x:Name="btnPaymentDetails" Content="Payment Details" Click="btnPaymentDetails_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,0,0,0"/>
+            <Frame x:Name="contentFrame" Grid.Row="1" Margin="10" />
+        </Grid>
+    </Grid>
+</Window>

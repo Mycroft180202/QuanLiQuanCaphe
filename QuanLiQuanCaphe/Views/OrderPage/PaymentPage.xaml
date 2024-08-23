@@ -1,0 +1,68 @@
+﻿<Page x:Class="QuanLiQuanCaphe.Views.Payment.PaymentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:QuanLiQuanCaphe.Views.Payment"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PaymentPage">
+    <Grid Background="#FFF1F0F0">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Thông tin đơn hàng -->
+        <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,124,176" Background="#FFE88888" Grid.RowSpan="2">
+            <Label Content="Order Information" FontWeight="Bold" Foreground="Red" FontSize="25"></Label>
+            <Label Content="OrderId" FontWeight="Bold" FontSize="15"></Label>
+            <TextBox x:Name="txtOrderId" Height="20" Width="348" IsReadOnly="True" HorizontalAlignment="Left"></TextBox>
+            <Label Content="UserId" FontWeight="Bold" FontSize="15"></Label>
+            <TextBox x:Name="txtUserId" HorizontalAlignment="Left" Height="20" Width="348"></TextBox>
+            <Label Content="OrderDate" FontWeight="Bold" FontSize="15"></Label>
+            <xctk:DateTimePicker Name="txtDatetime" HorizontalAlignment="Left" Height="30" Width="348" 
+                                 Format="Custom" FormatString="dd/MM/yyyy HH:mm:ss"/>
+
+            <Label Content="Status" FontWeight="Bold" FontSize="15"/>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton x:Name="rbProcessing" FontWeight="Bold" Content="Đang xử lý" Margin="0,0,10,0"/>
+                <RadioButton x:Name="rbCompleted" FontWeight="Bold" Content="Hoàn thành" Margin="10,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Thông tin thanh toán -->
+        <StackPanel Grid.Row="0" Margin="356,0,0,176" Background="#FFB1F1EC" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <TextBlock Text="Payment Method:" FontWeight="Bold"/>
+            <ComboBox x:Name="cbPaymentMethod" SelectedValue="{Binding SelectedPaymentMethod}" SelectionChanged="cbPaymentMethod_SelectionChanged">
+                <ComboBoxItem Content="Tiền mặt"/>
+                <ComboBoxItem Content="Thẻ tín dụng"/>
+                <ComboBoxItem Content="Thẻ ghi nợ"/>
+                <ComboBoxItem Content="Ví điện tử"/>
+            </ComboBox>
+            <WrapPanel>
+                <Button Content="Refresh" Margin="15" Height="25" Width="72" Click="btnRefresh_Click"></Button>
+                <Button Content="Add Order" Margin="15" Height="25" Width="72" Click="btnAdd_Click"></Button>
+                <Button Content="Edit Order" Margin="15" Height="25" Width="72" Click="btnEdit_Click"></Button>
+                <Button Content="Delete Order" Margin="15" Height="25" Width="72" Click="btnDelete_Click"></Button>
+            </WrapPanel>
+
+        </StackPanel>
+
+        <!-- DataGrid -->
+        <ListView Name="lvOrder" SelectionChanged="lvOrder_SelectionChanged" Margin="0,274,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Order ID" Width="60" DisplayMemberBinding="{Binding Path=OrderId}"/>
+                    <GridViewColumn Header="User ID" Width="60" DisplayMemberBinding="{Binding Path=UserId}"/>
+                    <GridViewColumn Header="Order Date" Width="250" DisplayMemberBinding="{Binding Path=OrderDate}"/>
+                    <GridViewColumn Header="Status" Width="120" DisplayMemberBinding="{Binding Path=Status}"/>
+                    <GridViewColumn Header="Total Amount" Width="150" DisplayMemberBinding="{Binding Path=TotalAmount}"/>
+                    <GridViewColumn Header="Payment Method" Width="155" DisplayMemberBinding="{Binding Path=PaymentMethod}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>
